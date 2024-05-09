@@ -28,7 +28,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'completed' => 'required|boolean',
-
+            'expires_at' => 'nullable|date|after:today',
         ]);
 
         $request->user()->tasks()->create($request->all());
@@ -77,6 +77,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'completed' => 'required|boolean',
+            'expires_at' => 'nullable|date|after:today',
         ]);
 
         $task->update($request->all());

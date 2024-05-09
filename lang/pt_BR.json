@@ -276,5 +276,10 @@
     "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account." : "Depois que sua conta for excluída, todos os seus recursos e dados serão excluídos permanentemente. Por favor, entre com a sua senha para confirmar que você quer deletar permanentemente sua conta.",
     "profile-updated" : "Perfil atualizado com sucesso",
     "Generate a" : "Gerar um",
-    "valid CPF" : "CPF válido"
+    "valid CPF" : "CPF válido",
+    "expires_at" : "Expira em",
+    "Fields with" : "Campos com",
+    "are required" : "são obrigatórios",
+    "Expires at" : "Expira em",
+    "No date" : "Sem data"
 }

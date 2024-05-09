@@ -31,6 +31,18 @@
                         <x-input-error class="mt-2" :messages="$errors->get('description')" />
                     </div>
 
+                     <div class="mb-4">
+                            <x-input-label for="expires_at" :value="__('expires_at')" />
+                            <x-text-input id="expires_at" name="expires_at" type="date" class="mt-1 block w-full"
+                                value="{{ 
+                                    $task->expires_at ? \Carbon\Carbon::parse($task->expires_at)->format('Y-m-d') : old('expires_at') 
+                                }}"
+                                
+                                 autofocus autocomplete="expires_at" />
+                            <x-input-error class="mt-2" :messages="$errors->get('expires_at')" />
+
+                        </div>
+
                     <div class="mb-4">
                         <x-input-label for="category" :value="__('Completed')" />
                         <select id="completed" name="completed"

@@ -39,15 +39,13 @@
                         </div>
                         <input type="search" id="default-search" name="search"
                             class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="{{ __('Search for tasks') }}" 
-                            value="{{ $search ?? '' }}"
-                            required />
+                            placeholder="{{ __('Search for tasks') }}" value="{{ $search ?? '' }}" required />
 
 
-                            <button type="submit"
-                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                {{ __('Search') }}
-                            </button>
+                        <button type="submit"
+                            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            {{ __('Search') }}
+                        </button>
                     </div>
 
                     <div class="mt-2 text-center">
@@ -77,6 +75,10 @@
                             </th>
 
                             <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+                                {{ __('Expires at') }}
+                            </th>
+
+                            <th scope="col" class="px-6 py-4 font-medium text-gray-900">
                                 {{ __('Status') }}
                             </th>
 
@@ -93,6 +95,13 @@
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-6 py-4">{{ $task->title }}</td>
                                     <td class="px-6 py-4">{{ $task->description }}</td>
+                                    <td class="px-6 py-4">
+                                        @if ($task->expires_at)
+                                            {{ \Carbon\Carbon::parse($task->expires_at)->format('d/m/Y') }} 
+                                        @else
+                                            {{ __('No date') }}
+                                        @endif
+                                    </td>
                                     <td class="px-6 py-4">
                                         @if ($task->completed)
                                             <span
@@ -142,7 +151,7 @@
                 </table>
 
                 <div class="m-5">
-                {{$tasks->links()}}
+                    {{ $tasks->links() }}
                 </div>
             </div>
         </div>
@@ -179,8 +188,13 @@
                     @csrf
                     @method('POST')
                     <div class="grid gap-4 mb-4 grid-cols-1 ">
+
+                        <small class="text-gray-500 dark:text-gray-400">
+                            {{ __('Fields with') }} <span class="text-red-600">*</span> {{ __('are required') }}
+                        </small>
+
                         <div>
-                            <x-input-label for="title" :value="__('Title')" />
+                            <x-input-label for="title" :value="__('Title')" :required=true />
                             <x-text-input id="title" name="title" type="text" class="mt-1 block w-full"
                                 :value="old('title')" required autofocus autocomplete="title"
                                 placeholder="Ex. Fazer compras" />
@@ -188,11 +202,19 @@
 
                         </div>
                         <div>
-                            <x-input-label for="description" :value="__('Description')" />
+                            <x-input-label for="description" :value="__('Description')" :required=true />
                             <x-text-input id="description" name="description" type="text"
                                 class="mt-1 block w-full" :value="old('description')" required autofocus
                                 autocomplete="description" placeholder="Ex. Comprar pão, leite e ovos" />
                             <x-input-error class="mt-2" :messages="$errors->get('description')" />
+
+                        </div>
+
+                        <div>
+                            <x-input-label for="expires_at" :value="__('expires_at')" />
+                            <x-text-input id="expires_at" name="expires_at" type="date" class="mt-1 block w-full"
+                                :value="old('expires_at')"  autofocus autocomplete="expires_at" />
+                            <x-input-error class="mt-2" :messages="$errors->get('expires_at')" />
 
                         </div>
 
@@ -274,17 +296,17 @@
         </div>
 
         <script>
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const taskId = button.dataset.taskId;
-                const modal = document.querySelector('#popup-modal');
-                const form = modal.querySelector('form');
-                form.action = form.action.replace('task_id', taskId);
-                form.querySelector('input[name="task_id"]').value = taskId;
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const taskId = button.dataset.taskId;
+                    const modal = document.querySelector('#popup-modal');
+                    const form = modal.querySelector('form');
+                    form.action = form.action.replace('task_id', taskId);
+                    form.querySelector('input[name="task_id"]').value = taskId;
+                });
             });
-        });
-    </script>
+        </script>
     @endif
-    
-    
+
+
 </x-app-layout>
