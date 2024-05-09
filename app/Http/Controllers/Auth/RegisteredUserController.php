@@ -52,7 +52,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        flash()->success(__('auth.registered'), title: __('auth.welcome'));
+        notyf()->success(__('auth.registered'), title: __('auth.welcome'));
 
         return redirect(route('dashboard'));
     }

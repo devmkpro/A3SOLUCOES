@@ -272,9 +272,8 @@
                 </div>
             </div>
         </div>
-    @endif
 
-    <script>
+        <script>
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const taskId = button.dataset.taskId;
@@ -285,4 +284,7 @@
             });
         });
     </script>
+    @endif
+    
+    
 </x-app-layout>

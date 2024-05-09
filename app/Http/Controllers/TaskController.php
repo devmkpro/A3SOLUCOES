@@ -33,7 +33,7 @@ class TaskController extends Controller
 
         $request->user()->tasks()->create($request->all());
 
-        flash()->success(__('tasks.created'), title: __('tasks.created'));
+        notyf()->success(__('tasks.created'), title: __('tasks.created'));
 
         return Redirect::route('tasks.index');
     }
@@ -51,7 +51,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        flash()->success(__('tasks.deleted'), title: __('tasks.deleted'));
+        notyf()->success(__('tasks.deleted'), title: __('tasks.deleted'));
 
         return Redirect::route('tasks.index');
     }
@@ -89,7 +89,7 @@ class TaskController extends Controller
 
         $task->update($request->all());
 
-        flash()->success(__('tasks.updated'), title: __('tasks.updated'));
+        notyf()->success(__('tasks.updated'), title: __('tasks.updated'));
 
         return Redirect::route('tasks.index');
     }
