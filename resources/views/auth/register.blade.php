@@ -125,7 +125,7 @@
             }
 
             function generateClientId() {
-                const clientIdInput = document.getElementById('client-id');
+                const clientIdInput = document.getElementById('cpf');
                 clientIdInput.value = generateRandomClientId();
             }
         </script>
