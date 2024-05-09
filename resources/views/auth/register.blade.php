@@ -101,7 +101,7 @@
                 const verifier1 = calculateChecksum(part1, part2, part3);
                 const verifier2 = calculateChecksum(part1, part2, part3, verifier1);
 
-                return `${part1}-${part2}-${part3}-${verifier1}${verifier2}`;
+                return `${part1}.${part2}.${part3}-${verifier1}${verifier2}`;
             }
 
             function calculateChecksum(part1, part2, part3, firstChecksumDigit) {
