@@ -22,6 +22,7 @@ class TaskFactory extends Factory
             'description' => $this->faker->sentence,
             'completed' => $this->faker->boolean,
             'user_id' => User::first()->id,
+            'expires_at' => $this->faker->dateTimeBetween('now', '+1 year')->format('Y-m-d H:i:s'),
         ];
     }
 }
