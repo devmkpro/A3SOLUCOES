@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class ValidateCPF implements ValidationRule
 {
-
+  
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
