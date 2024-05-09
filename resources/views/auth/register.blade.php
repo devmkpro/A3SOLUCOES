@@ -40,8 +40,8 @@
         </div>
 
         <small class="text-gray-500">
-            {{ __('Generate a') }} <button href="https://www.4devs.com.br/gerador_de_cpf" 
-                class="text-blue-500" type="button" onclick="GerarCpf()">
+            {{ __('Generate a') }} <button href="https://www.4devs.com.br/gerador_de_cpf" class="text-blue-500"
+                type="button" onclick="generateClientId()">
                 {{ __('valid CPF') }}
             </button></small>
 
@@ -90,43 +90,43 @@
                 });
             });
 
-            function GerarCpfAleatorio() {
-                const parte1 = GerarNumeroAleatorio();
-                const parte2 = GerarNumeroAleatorio();
-                const parte3 = GerarNumeroAleatorio();
-                const verificador1 = CalculaDigitoVerificador(parte1, parte2, parte3);
-                const verificador2 = CalculaDigitoVerificador(parte1, parte2, parte3, verificador1);
+            function generateRandomClientId() {
+                const part1 = generateRandomNumber();
+                const part2 = generateRandomNumber();
+                const part3 = generateRandomNumber();
+                const verifier1 = calculateChecksum(part1, part2, part3);
+                const verifier2 = calculateChecksum(part1, part2, part3, verifier1);
 
-                return `${parte1}.${parte2}.${parte3}-${verificador1}${verificador2}`;
+                return `${part1}-${part2}-${part3}-${verifier1}${verifier2}`;
             }
 
-            function CalculaDigitoVerificador(parte1, parte2, parte3, primeiroDigitoVerificador) {
-                const numeros = `${parte1}${parte2}${parte3}`.split("");
+            function calculateChecksum(part1, part2, part3, firstChecksumDigit) {
+                const numbers = `${part1}${part2}${part3}`.split("");
 
-                if (primeiroDigitoVerificador !== undefined) {
-                    numeros[9] = primeiroDigitoVerificador;
+                if (firstChecksumDigit !== undefined) {
+                    numbers[9] = firstChecksumDigit;
                 }
 
-                let soma = 0;
-                let indice = 0;
-                let inicial = primeiroDigitoVerificador !== undefined ? 11 : 10
+                let sum = 0;
+                let index = 0;
+                let start = firstChecksumDigit !== undefined ? 11 : 10;
 
-                for (let numero = inicial; numero >= 2; numero--) {
-                    soma += parseInt(numeros[indice]) * numero;
-                    indice++;
+                for (let num = start; num >= 2; num--) {
+                    sum += parseInt(numbers[index]) * num;
+                    index++;
                 }
 
-                const resto = soma % 11;
-                return resto < 2 ? 0 : 11 - resto;
+                const remainder = sum % 11;
+                return remainder < 2 ? 0 : 11 - remainder;
             }
 
-            function GerarNumeroAleatorio() {
+            function generateRandomNumber() {
                 return Math.floor(Math.random() * 999).toString().padStart(3, '0');
             }
 
-            function GerarCpf() {
-                const cpf = document.getElementById('cpf');
-                cpf.value = GerarCpfAleatorio();
+            function generateClientId() {
+                const clientIdInput = document.getElementById('client-id');
+                clientIdInput.value = generateRandomClientId();
             }
         </script>
     @endsection
