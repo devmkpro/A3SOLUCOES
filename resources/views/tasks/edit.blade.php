@@ -46,7 +46,7 @@
                     <div class="mb-4">
                         <x-input-label for="category" :value="__('Completed')" />
                         <select id="completed" name="completed"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
                             <option selected value="0" @if ($task->completed == 0) selected @endif>Não</option>
                             <option value="1" @if ($task->completed == 1) selected @endif>Sim</option>
                         </select>
@@ -57,7 +57,7 @@
                     <div class="flex items-center space-x-4">
 
                         <a href="{{ route('tasks.index') }}"
-                            class="bg-gray-100 text-gray-900 font-medium py-2.5 px-5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-white"
+                            class="bg-gray-100 text-gray-900 font-medium py-2.5 px-5 rounded-lg hover:bg-gray-200"
                             data-modal-toggle="createTask">
                             {{ __('Cancel') }}
                         </a>

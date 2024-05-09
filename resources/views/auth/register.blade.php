@@ -40,10 +40,14 @@
         </div>
 
         <small class="text-gray-500">
-            {{ __('Generate a') }} <button href="https://www.4devs.com.br/gerador_de_cpf" class="text-blue-500"
-                type="button" onclick="generateClientId()">
+            {{ __('Generate a') }} 
+            
+            <button href="https://www.4devs.com.br/gerador_de_cpf" class="text-blue-500"
+                type="button" onclick="generateClientId()" style="cursor: pointer; color: #3b82f6;">
                 {{ __('valid CPF') }}
-            </button></small>
+            </button>
+            
+        </small>
 
         <!-- Password -->
         <div class="mt-4">
