@@ -87,11 +87,11 @@
 
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                    <tbody class="divide-y divide-gray-100 border-t border-gray-100 dark:border-gray-700">
 
                         @if ($tasks->count() > 0)
                             @foreach ($tasks as $task)
-                                <tr class="hover:bg-gray-50">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
                                     <td class="px-6 py-4">{{ $task->title }}</td>
                                     <td class="px-6 py-4">{{ $task->description }}</td>
                                     <td class="px-6 py-4">
