@@ -33,7 +33,6 @@ class TaskController extends Controller
 
         $request->user()->tasks()->create($request->all());
 
-        notyf()->success(__('tasks.created'), title: __('tasks.created'));
 
         return Redirect::route('tasks.index');
     }
@@ -44,16 +43,13 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         if ($task->user_id !== auth()->id()) {
-            flash()->error(__('tasks.not_allowed'), title: __('tasks.not_allowed'));
 
             return Redirect::route('tasks.index');
         }
 
         $task->delete();
 
-        notyf()->success(__('tasks.deleted'), title: __('tasks.deleted'));
-
-        return Redirect::route('tasks.index');
+        return Redirect::route('tasks.index')->with('success', __('tasks.deleted'));
     }
 
     /**
@@ -62,8 +58,6 @@ class TaskController extends Controller
     public function edit(Task $task): View
     {
         if ($task->user_id !== auth()->id()) {
-            flash()->error(__('tasks.not_allowed'), title: __('tasks.not_allowed'));
-
             return Redirect::route('tasks.index');
         }
 
@@ -76,8 +70,6 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         if ($task->user_id !== auth()->id()) {
-            flash()->error(__('tasks.not_allowed'), title: __('tasks.not_allowed'));
-
             return Redirect::route('tasks.index');
         }
 
@@ -89,9 +81,7 @@ class TaskController extends Controller
 
         $task->update($request->all());
 
-        notyf()->success(__('tasks.updated'), title: __('tasks.updated'));
-
-        return Redirect::route('tasks.index');
+        return Redirect::route('tasks.index')->with('success', __('tasks.updated'));
     }
 
     /**

@@ -52,8 +52,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        notyf()->success(__('auth.registered'), title: __('auth.welcome'));
-
         return redirect(route('dashboard'));
     }
 

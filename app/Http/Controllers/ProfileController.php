@@ -33,9 +33,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        notyf()->success(__('profile.updated'), title: __('profile.success'));
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with('success', __('profile.updated'));
     }
 
     /**
