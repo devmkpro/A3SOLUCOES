@@ -30,9 +30,8 @@ class TaskController extends Controller
             'status' => 'required|string|in:pending,completed',
             'expires_at' => 'nullable|date|after:today',
         ]);
-
+        
         $request->user()->tasks()->create($request->all());
-
 
         return Redirect::route('tasks.index')->with('success', __('tasks.created'));
     }

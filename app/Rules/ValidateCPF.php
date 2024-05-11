@@ -17,7 +17,7 @@ class ValidateCPF implements ValidationRule
             $fail('CPF deve conter 11 caracteres.');
         }
 
-        if (preg_match('/(\d)\1{10}/', $cpf)) { // Verifica se todos os digitos são iguais
+        if (preg_match('/(\d)\1{10}/', $cpf)) { 
             $fail('CPF inválido.'); 
         }
 
