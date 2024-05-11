@@ -17,6 +17,10 @@ class ValidateCPF implements ValidationRule
             $fail('CPF deve conter 11 caracteres.');
         }
 
+        if (preg_match('/(\d)\1{10}/', $cpf)) { // Verifica se todos os digitos são iguais
+            $fail('CPF inválido.'); 
+        }
+
         // Digito verificador (nove primeiros digitos)
         $cpfValidate = substr($cpf, 0, 9);
         $cpfValidate .= $this->calculateDigit($cpfValidate);
