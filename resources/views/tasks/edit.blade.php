@@ -44,13 +44,14 @@
                         </div>
 
                     <div class="mb-4">
-                        <x-input-label for="category" :value="__('Completed')" />
-                        <select id="completed" name="completed"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-primary-600 dark:focus:border-primary-600 ">
-                            <option selected value="0" @if ($task->completed == 0) selected @endif>Não</option>
-                            <option value="1" @if ($task->completed == 1) selected @endif>Sim</option>
-                        </select>
-                        <x-input-error class="mt-2" :messages="$errors->get('completed')" />
+                            <x-input-label for="status" :value="__('Status')" />
+                            <select id="status" name="status"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-primary-600 dark:focus:border-primary-600">
+                                <option selected value="pending">{{ __('Pending') }}</option>
+                                <option value="completed">{{ __('Completed') }}</option>
+                                <option value="canceled">{{ __('Canceled') }}</option>
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('status')" />
                     </div>
 
 

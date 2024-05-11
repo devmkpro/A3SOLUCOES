@@ -10,11 +10,10 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'completed', 'user_id', 'expires_at'];
+    protected $fillable = ['title', 'description', 'status', 'user_id', 'expires_at'];
 
     protected $casts = [
         'expires_at' => 'datetime',
-        'completed' => 'boolean',
     ];
 
     public function user(): BelongsTo

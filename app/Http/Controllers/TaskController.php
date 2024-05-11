@@ -27,7 +27,7 @@ class TaskController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'completed' => 'required|boolean',
+            'status' => 'required|string|in:pending,completed',
             'expires_at' => 'nullable|date|after:today',
         ]);
 
@@ -76,7 +76,7 @@ class TaskController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'completed' => 'required|boolean',
+            'status' => 'required|string|in:pending,completed,canceled',
             'expires_at' => 'nullable|date|after:today',
         ]);
 

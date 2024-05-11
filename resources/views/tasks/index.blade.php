@@ -102,15 +102,25 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4">
-                                        @if ($task->completed)
+                                        @if ($task->status == 'completed')
                                             <span
-                                                class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-                                                <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+                                                class="text-green-500 bg-green-100 font-semibold px-2.5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-200">
+                                                {{ __('Completed') }}
+                                            </span>
+                                        @elseif (\Carbon\Carbon::parse($task->expires_at)->isPast())
+                                            <span
+                                                class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
+                                                {{ __('Expired') }}
+                                            </span>
+                                        @elseif ($task->status == 'canceled')
+                                            <span
+                                                class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
+                                                {{ __('Canceled') }}
                                             </span>
                                         @else
                                             <span
-                                                class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
-                                                <span class="h-1.5 w-1.5 rounded-full bg-red-600"></span>
+                                                class="text-yellow-500 bg-yellow-100 font-semibold px-2.5 py-1.5 rounded-full">
+                                                {{ __('Pending') }}
                                             </span>
                                         @endif
                                     </td>
@@ -217,13 +227,13 @@
                         </div>
 
                         <div>
-                            <x-input-label for="completed" :value="__('Completed')" />
-                            <select id="completed" name="completed"
+                            <x-input-label for="status" :value="__('Status')" />
+                            <select id="status" name="status"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-primary-600 dark:focus:border-primary-600">
-                                <option selected value="0">Não</option>
-                                <option value="1">Sim</option>
+                                <option selected value="pending">{{ __('Pending') }}</option>
+                                <option value="completed">{{ __('Completed') }}</option>
                             </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('completed')" />
+                            <x-input-error class="mt-2" :messages="$errors->get('status')" />
                         </div>
 
                     </div>

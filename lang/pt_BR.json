@@ -281,5 +281,7 @@
     "Fields with" : "Campos com",
     "are required" : "são obrigatórios",
     "Expires at" : "Expira em",
-    "No date" : "Sem data"
+    "No date" : "Sem data",
+    "Canceled" : "Cancelada",
+    "Expired" : "Expirada"
 }
