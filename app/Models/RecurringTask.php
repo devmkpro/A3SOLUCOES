@@ -2,15 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 class RecurringTask extends Task
 {
-    use HasFactory;
 
-    protected $fillable = ['recurrence_type', 'recurrence_interval_days', 'recurrence_end_date'];
-
-    public function setRecurrence($type, $interval, $endDate = null)
+    protected function setRecurrence($type, $interval, $endDate = null)
     {
         $this->recurrence_type = $type;
         $this->recurrence_interval = $interval;
@@ -18,13 +13,15 @@ class RecurringTask extends Task
         $this->save();
     }
 
-    public function getRecurrence()
+    public function getData() : array
     {
-        return [
-            'type' => $this->recurrence_type,
-            'interval' => $this->recurrence_interval,
-            'end_date' => $this->recurrence_end_date,
-        ];
+        $data = parent::getData();
+        $data['recurrence_type'] = $this->recurrence_type;
+        $data['recurrence_interval'] = $this->recurrence_interval;
+        $data['recurrence_end_date'] = $this->recurrence_end_date;
+        return $data;
     }
+
+    
 
 }

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             $table->enum('recurrence_type', ['daily', 'weekly', 'monthly', 'yearly'])->nullable();
-            $table->integer('recurrence_interval_days')->nullable();
             $table->date('recurrence_end_date')->nullable();
         });
     }

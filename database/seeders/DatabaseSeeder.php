@@ -21,6 +21,15 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        Task::factory(20)->create();
+       
+        Task::factory(5)->create();
+        Task::create([
+            'title' => 'Test Task',
+            'description' => 'This is a test task',
+            'user_id' => User::first()->id,
+            'expires_at' => now()->addDays(7),
+            'recurrence_type' => 'weekly',
+            'recurrence_end_date' => now()->addMonths(6),
+        ]);
     }
 }

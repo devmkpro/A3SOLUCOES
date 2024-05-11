@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <div class=" items-center m-5">
+            <div class=" items-center mb-4">
                 @include('components.erros_val')
             </div>
 
@@ -19,7 +19,8 @@
                     <div class="mb-4">
                         <x-input-label for="title" :value="__('Title')" />
                         <x-text-input id="title" name="title" type="text" class="mt-1 block w-full"
-                            :value="old('title')" required autofocus autocomplete="title" placeholder="Ex. Fazer compras" value="{{ $task->title }}" />
+                            :value="old('title')" required autofocus autocomplete="title" placeholder="Ex. Fazer compras"
+                            value="{{ $task->title }}" />
                         <x-input-error class="mt-2" :messages="$errors->get('title')" />
                     </div>
 
@@ -31,27 +32,51 @@
                         <x-input-error class="mt-2" :messages="$errors->get('description')" />
                     </div>
 
-                     <div class="mb-4">
-                            <x-input-label for="expires_at" :value="__('expires_at')" />
-                            <x-text-input id="expires_at" name="expires_at" type="date" class="mt-1 block w-full"
-                                value="{{ 
-                                    $task->expires_at ? \Carbon\Carbon::parse($task->expires_at)->format('Y-m-d') : old('expires_at') 
-                                }}"
-                                
-                                 autofocus autocomplete="expires_at" />
-                            <x-input-error class="mt-2" :messages="$errors->get('expires_at')" />
+                    <div class="mb-4">
+                        <x-input-label for="recurrence_type" :value="__('Recurrence Type')" />
+                        <select id="recurrence_type" name="recurrence_type"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-primary-600 dark:focus:border-primary-600">
+                            <option @if($task->recurrence_type == 'daily') selected @endif value="daily">{{ __('Daily') }}</option>
+                            <option @if($task->recurrence_type == 'weekly') selected @endif value="weekly">{{ __('Weekly') }}</option>
+                            <option @if($task->recurrence_type == 'monthly') selected @endif value="monthly">{{ __('Monthly') }}</option>
+                            <option @if($task->recurrence_type == 'yearly') selected @endif value="yearly">{{ __('Yearly') }}</option>
+                            <option @if(!$task->recurrence_type) selected @endif value="">{{ __('No') }}</option>
+                        </select>
+                        <x-input-error class="mt-2" :messages="$errors->get('recurrence_type')" />
+                    </div>
 
+
+                    <div @if(!$task->recurrence_type) class="hidden" @endif id="recurrenceFields">
+                        <div>
+                            <x-input-label for="recurrence_end_date" :value="__('Recurrence End Date')" />
+                            <x-text-input id="recurrence_end_date" name="recurrence_end_date" type="date"
+                                class="mt-1 block w-full" value="{{ $task->recurrence_end_date ? \Carbon\Carbon::parse($task->recurrence_end_date)->format('Y-m-d') : old('recurrence_end_date') }}"
+                                
+                                autofocus autocomplete="recurrence_end_date"
+                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                            <x-input-error class="mt-2" :messages="$errors->get('recurrence_end_date')" />
                         </div>
 
+                    </div>
+
+                    <div class="mb-4 mt-4">
+                        <x-input-label for="expires_at" :value="__('expires_at')" />
+                        <x-text-input id="expires_at" name="expires_at" type="date" class="mt-1 block w-full"
+                            value="{{ $task->expires_at ? \Carbon\Carbon::parse($task->expires_at)->format('Y-m-d') : old('expires_at') }}"
+                            autofocus autocomplete="expires_at" />
+                        <x-input-error class="mt-2" :messages="$errors->get('expires_at')" />
+
+                    </div>
+
                     <div class="mb-4">
-                            <x-input-label for="status" :value="__('Status')" />
-                            <select id="status" name="status"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-primary-600 dark:focus:border-primary-600">
-                                <option selected value="pending">{{ __('Pending') }}</option>
-                                <option value="completed">{{ __('Completed') }}</option>
-                                <option value="canceled">{{ __('Canceled') }}</option>
-                            </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('status')" />
+                        <x-input-label for="status" :value="__('Status')" />
+                        <select id="status" name="status"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-primary-600 dark:focus:border-primary-600">
+                            <option selected value="pending">{{ __('Pending') }}</option>
+                            <option value="completed">{{ __('Completed') }}</option>
+                            <option value="canceled">{{ __('Canceled') }}</option>
+                        </select>
+                        <x-input-error class="mt-2" :messages="$errors->get('status')" />
                     </div>
 
 
@@ -80,6 +105,17 @@
     </div>
 
 
+ <script>
+        const recurrenceType = document.querySelector('#recurrence_type');
+        const recurrenceFields = document.querySelector('#recurrenceFields');
 
+        recurrenceType.addEventListener('change', () => {
+            if (recurrenceType.value) {
+                recurrenceFields.classList.remove('hidden');
+            } else {
+                recurrenceFields.classList.add('hidden');
+            }
+        });
+    </script>
 
 </x-app-layout>

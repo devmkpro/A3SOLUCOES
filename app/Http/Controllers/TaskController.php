@@ -29,6 +29,8 @@ class TaskController extends Controller
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed',
             'expires_at' => 'nullable|date|after:today',
+            'recurrence_type' => 'nullable|string|in:daily,weekly,monthly,yearly',
+            'recurrence_end_date' => 'nullable|date|after:today',
         ]);
         
         $request->user()->tasks()->create($request->all());
@@ -77,7 +79,15 @@ class TaskController extends Controller
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed,canceled',
             'expires_at' => 'nullable|date|after:today',
+            'recurrence_type' => 'nullable|string|in:daily,weekly,monthly,yearly',
+            'recurrence_end_date' => 'nullable|date|after:today',
         ]);
+
+        if ($request->recurrence_end_date && $request->expires_at) {
+            if ($request->recurrence_end_date > $request->expires_at) {
+                return Redirect::back()->withErrors(['recurrence_end_date' => __('tasks.recurrence_end_date_error')]);
+            } 
+        } 
 
         $task->update($request->all());
 

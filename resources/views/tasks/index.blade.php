@@ -45,7 +45,7 @@
                             {{ __('Search') }}</button>
                     </div>
 
-                    
+
                     <div class="mt-2 text-center">
                         @if (isset($search))
                             <a href="{{ route('tasks.index') }}"
@@ -77,8 +77,12 @@
                                 {{ __('Expires at') }}
                             </th>
 
-                            <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white text-center">
                                 {{ __('Status') }}
+                            </th>
+
+                            <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                {{ __('Is Recurrent') }}
                             </th>
 
                             <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
@@ -124,6 +128,24 @@
                                             </span>
                                         @endif
                                     </td>
+
+                                    <td class="px-6 py-4 text-center">
+                                        @if ($task->recurrence_type)
+                                            <span
+                                                class="text-green-500 bg-green-100 font-semibold px-2.5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-200">
+                                                {{ $task->getRecurrenceType() }}
+
+                                            </span>
+                                        @else
+                                            <span
+                                                class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
+                                                {{ __('No') }}
+                                            </span>
+                                        @endif
+                                    </td>
+
+
+
                                     <td class="px-6 py-4">
                                         <div class="flex justify-start gap-2">
                                             <button data-modal-target="popup-modal" data-task-id="{{ $task->id }}"
@@ -219,6 +241,31 @@
                         </div>
 
                         <div>
+                            <x-input-label for="recurrence_type" :value="__('Recurrence Type')" />
+                            <select id="recurrence_type" name="recurrence_type"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-primary-600 dark:focus:border-primary-600">
+                                <option selected value="no">{{ __('No') }}</option>
+                                <option value="daily">{{ __('Daily') }}</option>
+                                <option value="weekly">{{ __('Weekly') }}</option>
+                                <option value="monthly">{{ __('Monthly') }}</option>
+                                <option value="yearly">{{ __('Yearly') }}</option>
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('recurrence_type')" />
+                        </div>
+
+                        <div class="hidden" id="recurrenceFields">
+                            <div>
+                                <x-input-label for="recurrence_end_date" :value="__('Recurrence End Date')" />
+                                <x-text-input id="recurrence_end_date" name="recurrence_end_date" type="date"
+                                    class="mt-1 block w-full" :value="old('recurrence_end_date')" autofocus
+                                    autocomplete="recurrence_end_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                <x-input-error class="mt-2" :messages="$errors->get('recurrence_end_date')" />
+                            </div>
+
+                        </div>
+
+                        <div>
                             <x-input-label for="expires_at" :value="__('expires_at')" />
                             <x-text-input id="expires_at" name="expires_at" type="date" class="mt-1 block w-full"
                                 :value="old('expires_at')" autofocus autocomplete="expires_at" />
@@ -304,19 +351,31 @@
         </div>
 
         <script>
-
-
-        document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            const taskId = button.dataset.taskId;
-            const modal = document.querySelector('#popup-modal');
-            const form = modal.querySelector('form');
-            form.action = form.action.replace('task_id', taskId);
-            form.querySelector('input[name="task_id"]').value = taskId;
-        });
-        });
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const taskId = button.dataset.taskId;
+                    const modal = document.querySelector('#popup-modal');
+                    const form = modal.querySelector('form');
+                    form.action = form.action.replace('task_id', taskId);
+                    form.querySelector('input[name="task_id"]').value = taskId;
+                });
+            });
         </script>
     @endif
+
+
+    <script>
+        const recurrenceType = document.querySelector('#recurrence_type');
+        const recurrenceFields = document.querySelector('#recurrenceFields');
+
+        recurrenceType.addEventListener('change', () => {
+            if (recurrenceType.value === 'no') {
+                recurrenceFields.classList.add('hidden');
+            } else {
+                recurrenceFields.classList.remove('hidden');
+            }
+        });
+    </script>
 
 
 </x-app-layout>

@@ -10,15 +10,38 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'status', 'user_id', 'expires_at'];
+    protected $fillable = ['title', 'description', 'status', 'user_id', 'expires_at', 'recurrence_type', 'recurrence_end_date'];
 
     protected $casts = [
         'expires_at' => 'datetime',
     ];
 
-    public function user(): BelongsTo
+    protected function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Polymorphic
+    public function getData() : array
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+            'status' => $this->status,
+            'user_id' => $this->user_id,
+            'expires_at' => $this->expires_at->format('Y-m-d H:i:s'),
+        ];
+    }
+
+    public function getRecurrenceType() : string
+    {
+        return match ($this->recurrence_type) {
+            'daily' => __('Daily'),
+            'weekly' => __('Weekly'),
+            'monthly' => __('Monthly'),
+            'yearly' => __('Yearly'),
+            default => __('Unknown'),
+        };
     }
 
 }

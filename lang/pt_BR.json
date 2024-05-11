@@ -283,5 +283,17 @@
     "Expires at" : "Expira em",
     "No date" : "Sem data",
     "Canceled" : "Cancelada",
-    "Expired" : "Expirada"
+    "Expired" : "Expirada",
+    "Is Recurrent" : "Recorrente",
+    "No" : "Não",
+    "Yes" : "Sim",
+    "Daily" : "Diária",
+    "Weekly" : "Semanal",
+    "Monthly" : "Mensal",
+    "Yearly" : "Anual",
+    "Unknow" : "Desconhecido",
+    "Recurrence Type" : "Recorrência",
+    "Recurrence Interval Days" : "Intervalo de Recorrência (dias)",
+    "Recurrence End Date" : "Data de Término da Recorrência",
+    "tasks.recurrence_end_date_error" : "A data de término da recorrência deve ser menor que a data de expiração"
 }
