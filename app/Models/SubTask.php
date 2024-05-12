@@ -26,7 +26,7 @@ class SubTask extends Task
      */
     public function task(): BelongsTo
     {
-        return $this->belongsTo(Task::class);
+        return $this->belongsTo(Task::class, 'task_id');
     }
 
     /**

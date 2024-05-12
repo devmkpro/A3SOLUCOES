@@ -170,10 +170,6 @@
 
                     </tbody>
                 </table>
-
-                <div class="m-5">
-                    {{ $subtasks->links() }}
-                </div>
             </div>
         </div>
     </div>

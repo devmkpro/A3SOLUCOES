@@ -92,5 +92,32 @@ class SubTaskController extends Controller
 
         return Redirect::route('subtasks.index')->with('success', __('subtasks.updated'));
     }
+
+    /**
+     * Search for a task.
+     */
+    public function search(Request $request): View
+    {
+        $request->validate([
+            'search' => 'required|string|max:255',
+        ]);
+    
+        $subtasks = SubTask::where('title', 'like', "%{$request->search}%")
+            ->orWhere('description', 'like', "%{$request->search}%")
+            ->whereHas('task', function ($query) {
+                $query->where('user_id', auth()->id());
+            });
+
+        $subtasks = $subtasks->get()->filter(function ($subtask) {
+            return $subtask->task->user_id === auth()->id();
+        });
+
+        
+        return view('subtasks.index', [
+            'subtasks' => $subtasks,
+            'search' => $request->search,
+            'tasks' => auth()->user()->tasks()->get(),
+        ]);
+    }
     
 }
