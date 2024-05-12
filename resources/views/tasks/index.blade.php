@@ -253,18 +253,6 @@
                             <x-input-error class="mt-2" :messages="$errors->get('recurrence_type')" />
                         </div>
 
-                        <div class="hidden" id="recurrenceFields">
-                            <div>
-                                <x-input-label for="recurrence_end_date" :value="__('Recurrence End Date')" />
-                                <x-text-input id="recurrence_end_date" name="recurrence_end_date" type="date"
-                                    class="mt-1 block w-full" :value="old('recurrence_end_date')" autofocus
-                                    autocomplete="recurrence_end_date"
-                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
-                                <x-input-error class="mt-2" :messages="$errors->get('recurrence_end_date')" />
-                            </div>
-
-                        </div>
-
                         <div>
                             <x-input-label for="expires_at" :value="__('expires_at')" />
                             <x-text-input id="expires_at" name="expires_at" type="date" class="mt-1 block w-full"
@@ -362,20 +350,5 @@
             });
         </script>
     @endif
-
-
-    <script>
-        const recurrenceType = document.querySelector('#recurrence_type');
-        const recurrenceFields = document.querySelector('#recurrenceFields');
-
-        recurrenceType.addEventListener('change', () => {
-            if (recurrenceType.value === 'no') {
-                recurrenceFields.classList.add('hidden');
-            } else {
-                recurrenceFields.classList.remove('hidden');
-            }
-        });
-    </script>
-
 
 </x-app-layout>

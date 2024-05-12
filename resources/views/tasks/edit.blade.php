@@ -46,19 +46,6 @@
                     </div>
 
 
-                    <div @if(!$task->recurrence_type) class="hidden" @endif id="recurrenceFields">
-                        <div>
-                            <x-input-label for="recurrence_end_date" :value="__('Recurrence End Date')" />
-                            <x-text-input id="recurrence_end_date" name="recurrence_end_date" type="date"
-                                class="mt-1 block w-full" value="{{ $task->recurrence_end_date ? \Carbon\Carbon::parse($task->recurrence_end_date)->format('Y-m-d') : old('recurrence_end_date') }}"
-                                
-                                autofocus autocomplete="recurrence_end_date"
-                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
-                            <x-input-error class="mt-2" :messages="$errors->get('recurrence_end_date')" />
-                        </div>
-
-                    </div>
-
                     <div class="mb-4 mt-4">
                         <x-input-label for="expires_at" :value="__('expires_at')" />
                         <x-text-input id="expires_at" name="expires_at" type="date" class="mt-1 block w-full"
@@ -104,18 +91,5 @@
         </div>
     </div>
 
-
- <script>
-        const recurrenceType = document.querySelector('#recurrence_type');
-        const recurrenceFields = document.querySelector('#recurrenceFields');
-
-        recurrenceType.addEventListener('change', () => {
-            if (recurrenceType.value) {
-                recurrenceFields.classList.remove('hidden');
-            } else {
-                recurrenceFields.classList.add('hidden');
-            }
-        });
-    </script>
 
 </x-app-layout>
