@@ -84,7 +84,7 @@ class SubTaskController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'status' => 'required|string|in:pending,completed',
+            'status' => 'required|string|in:pending,completed,canceled',
             'expires_at' => 'nullable|date|after:today',
         ]);
 
@@ -112,7 +112,7 @@ class SubTaskController extends Controller
             return $subtask->task->user_id === auth()->id();
         });
 
-        
+
         return view('subtasks.index', [
             'subtasks' => $subtasks,
             'search' => $request->search,
