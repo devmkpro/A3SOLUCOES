@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'title' => 'Test Task',
             'description' => 'This is a test task',
             'user_id' => User::first()->id,
-            'expires_at' => now()->addDays(7),
+            'expires_at' => now()->addMonths(6),
             'recurrence_type' => 'weekly',
             'recurrence_end_date' => now()->addMonths(6),
         ]);
