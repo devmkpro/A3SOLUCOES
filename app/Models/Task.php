@@ -16,12 +16,20 @@ class Task extends Model
         'expires_at' => 'datetime',
     ];
 
+    /**
+     * Get the user that owns the task.
+     * @return BelongsTo
+     */
+
     protected function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    // Polymorphic
+    /**
+     * Get the data for the task.
+     * @return array
+     */
     public function getData() : array
     {
         return [
@@ -32,6 +40,11 @@ class Task extends Model
             'expires_at' => $this->expires_at->format('Y-m-d H:i:s'),
         ];
     }
+
+    /**
+     * Get the recurrence type for the task.
+     * @return string
+     */
 
     public function getRecurrenceType() : string
     {
