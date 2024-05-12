@@ -44,8 +44,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         if ($task->user_id !== auth()->id()) {
-
-            return Redirect::route('tasks.index');
+            return Redirect::route('tasks.index')->with('error', __('tasks.not_allowed'));
         }
 
         $task->delete();

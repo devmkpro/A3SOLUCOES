@@ -1,4 +1,8 @@
 <x-app-layout>
+    @section('styles')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    @endsection
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Tasks') }}
@@ -15,7 +19,7 @@
             </div>
 
             <div class="flex justify-end mb-5">
-                <button data-modal-target="createTask" data-modal-toggle="createTask"
+                <button data-modal-target="createSubTask" data-modal-toggle="createSubTask"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
@@ -26,7 +30,7 @@
 
             <div class="m-5">
 
-                <form class="max-w-md mx-auto" action="{{ route('tasks.search') }}">
+                <form class="max-w-md mx-auto" action="{{ route('subtasks.search') }}">
                     <label for="default-search"
                         class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div class="relative">
@@ -39,7 +43,7 @@
                         </div>
                         <input type="search" id="default-search" name="search"
                             class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="{{ __('Search for tasks') }}" value="{{ $search ?? '' }}" required />
+                            placeholder="{{ __('Search for subtasks') }}" value="{{ $search ?? '' }}" required />
                         <button type="submit"
                             class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             {{ __('Search') }}</button>
@@ -48,7 +52,7 @@
 
                     <div class="mt-2 text-center">
                         @if (isset($search))
-                            <a href="{{ route('tasks.index') }}"
+                            <a href="{{ route('subtasks.index') }}"
                                 class="text-blue-500 hover:text-blue-700 font-medium text-sm dark:text-blue-400 dark:hover:text-blue-500">
                                 {{ __('Clear search') }}
                             </a>
@@ -65,6 +69,11 @@
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-200">
                         <tr>
+
+                            <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                {{ __('Task') }}
+                            </th>
+
                             <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                 {{ __('Title') }}
                             </th>
@@ -73,21 +82,12 @@
                                 {{ __('Description') }}
                             </th>
 
-
                             <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                {{ __('Qtd Subtasks') }}
-                            </th>
-
-                              <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                 {{ __('Expires at') }}
                             </th>
 
                             <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white text-center">
                                 {{ __('Status') }}
-                            </th>
-
-                            <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                {{ __('Is Recurrent') }}
                             </th>
 
                             <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
@@ -98,36 +98,36 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100 border-t border-gray-100 dark:border-gray-700">
 
-                        @if ($tasks->count() > 0)
-                            @foreach ($tasks as $task)
+                        @if ($subtasks->count() > 0)
+                            @foreach ($subtasks as $subtask)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                    <td class="px-6 py-4">{{ $task->title }}</td>
-                                    <td class="px-6 py-4">{{ $task->description }}</td>
-                                    <td class="px-6 py-4">{{ $task->subtasks->count() }}</td>
+                                    <td class="px-6 py-4">{{ $subtask->task->title }}</td>
+                                    <td class="px-6 py-4">{{ $subtask->title }}</td>
+                                    <td class="px-6 py-4">{{ $subtask->description }}</td>
                                     <td class="px-6 py-4">
-                                        @if ($task->expires_at)
-                                            {{ \Carbon\Carbon::parse($task->expires_at)->format('d/m/Y') }}
+                                        @if ($subtask->expires_at)
+                                            {{ \Carbon\Carbon::parse($subtask->expires_at)->format('d/m/Y') }}
                                         @else
                                             {{ __('No date') }}
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4">
-                                        @if ($task->status == 'completed')
+                                    <td class="px-6 py-4 text-center">
+                                        @if ($subtask->status == 'completed')
                                             <span
                                                 class="text-green-500 bg-green-100 font-semibold px-2.5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-200">
                                                 {{ __('Completed') }}
                                             </span>
-                                        @elseif (\Carbon\Carbon::parse($task->expires_at)->isPast())
+                                        @elseif ((\Carbon\Carbon::parse($subtask->expires_at)->isPast() && $subtask->expires_at != null) || $subtask->status == 'expired')
                                             <span
                                                 class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Expired') }}
                                             </span>
-                                        @elseif ($task->status == 'canceled')
+                                        @elseif ($subtask->status == 'canceled')
                                             <span
                                                 class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Canceled') }}
                                             </span>
-                                        @else
+                                        @elseif ($subtask->status == 'pending')
                                             <span
                                                 class="text-yellow-500 bg-yellow-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Pending') }}
@@ -135,26 +135,10 @@
                                         @endif
                                     </td>
 
-                                    <td class="px-6 py-4 text-center">
-                                        @if ($task->recurrence_type)
-                                            <span
-                                                class="text-green-500 bg-green-100 font-semibold px-2.5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-200">
-                                                {{ $task->getRecurrenceType() }}
-
-                                            </span>
-                                        @else
-                                            <span
-                                                class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
-                                                {{ __('No') }}
-                                            </span>
-                                        @endif
-                                    </td>
-
-
 
                                     <td class="px-6 py-4">
                                         <div class="flex justify-start gap-2">
-                                            <button data-modal-target="popup-modal" data-task-id="{{ $task->id }}"
+                                            <button data-modal-target="popup-modal" data-task-id="{{ $subtask->id }}"
                                                 data-modal-toggle="popup-modal" class="delete-btn">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -164,7 +148,7 @@
                                                 </svg>
                                             </button>
                                             <a x-data="{ tooltip: 'Edit' }"
-                                                href="  {{ route('tasks.edit', ['task' => $task->id]) }}">
+                                                href="  {{ route('subtasks.edit', ['subtask' => $subtask->id]) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                     class="h-6 w-6" x-tooltip="tooltip">
@@ -179,7 +163,7 @@
                         @else
                             <tr>
                                 <td class="px-6 py-4 text-center" colspan="6">
-                                    {{ __('No tasks found') }}
+                                    {{ __('No subtasks found') }}
                                 </td>
                             </tr>
                         @endif
@@ -188,7 +172,7 @@
                 </table>
 
                 <div class="m-5">
-                    {{ $tasks->links() }}
+                    {{ $subtasks->links() }}
                 </div>
             </div>
         </div>
@@ -197,7 +181,7 @@
 
 
     <!-- modals -->
-    <div id="createTask" tabindex="-1" aria-hidden="true"
+    <div id="createSubTask" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full dark:bg-gray-900 dark:bg-opacity-50 dark:text-white">
         <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
             <!-- Modal content -->
@@ -205,11 +189,11 @@
                 <!-- Modal header -->
                 <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 ">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        {{ __('Create Task') }}
+                        {{ __('Create SubTask') }}
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
-                        data-modal-toggle="createTask">
+                        data-modal-toggle="createSubTask">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -220,7 +204,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="{{ route('tasks.store') }}" method="POST">
+                <form action="{{ route('subtasks.store') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="grid gap-4 mb-4 grid-cols-1 ">
@@ -233,7 +217,7 @@
                             <x-input-label for="title" :value="__('Title')" :required=true />
                             <x-text-input id="title" name="title" type="text" class="mt-1 block w-full"
                                 :value="old('title')" required autofocus autocomplete="title"
-                                placeholder="Ex. Fazer compras" />
+                                placeholder="Ex. Pesquisar sobre Laravel" />
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />
 
                         </div>
@@ -241,22 +225,10 @@
                             <x-input-label for="description" :value="__('Description')" :required=true />
                             <x-text-input id="description" name="description" type="text"
                                 class="mt-1 block w-full" :value="old('description')" required autofocus
-                                autocomplete="description" placeholder="Ex. Comprar pão, leite e ovos" />
+                                autocomplete="description"
+                                placeholder="Ex. Realizar a pesquisa em fontes confiáveis" />
                             <x-input-error class="mt-2" :messages="$errors->get('description')" />
 
-                        </div>
-
-                        <div>
-                            <x-input-label for="recurrence_type" :value="__('Recurrence Type')" />
-                            <select id="recurrence_type" name="recurrence_type"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-primary-600 dark:focus:border-primary-600">
-                                <option selected value="no">{{ __('No') }}</option>
-                                <option value="daily">{{ __('Daily') }}</option>
-                                <option value="weekly">{{ __('Weekly') }}</option>
-                                <option value="monthly">{{ __('Monthly') }}</option>
-                                <option value="yearly">{{ __('Yearly') }}</option>
-                            </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('recurrence_type')" />
                         </div>
 
                         <div>
@@ -266,6 +238,12 @@
                             <x-input-error class="mt-2" :messages="$errors->get('expires_at')" />
 
                         </div>
+
+                        <select class="task_id_selelect" name="task_id">
+                            @foreach ($tasks as $task)
+                                <option value="{{ $task->id }}">{{ $task->title }}</option>
+                            @endforeach
+                        </select>
 
                         <div>
                             <x-input-label for="status" :value="__('Status')" />
@@ -282,7 +260,7 @@
 
                         <button type="button"
                             class="bg-gray-100 text-gray-900 font-medium py-2.5 px-5 rounded-lg hover:bg-gray-200 "
-                            data-modal-toggle="createTask">
+                            data-modal-toggle="createSubTask">
                             {{ __('Cancel') }}
                         </button>
                         <button type="submit"
@@ -300,7 +278,7 @@
 
 
 
-    @if ($tasks->count() > 0)
+    @if ($subtasks->count() > 0)
         <div id="popup-modal" tabindex="-1"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
@@ -323,13 +301,13 @@
                         </svg>
                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-white">
 
-                            {{ __('Are you sure you want to delete this task?') }}
+                            {{ __('Are you sure you want to delete this subtask?') }}
                         </h3>
 
-                        <form action="{{ route('tasks.destroy', ['task' => 'task_id']) }}" method="POST">
+                        <form action="{{ route('subtasks.destroy', ['subtask' => 'subtask_id']) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <input type="hidden" name="task_id" value="">
+                            <input type="hidden" name="subtask_id" value="">
                             <button data-modal-hide="popup-modal" type="submit"
                                 class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 ">
                                 {{ __('Yes, delete') }}
@@ -350,11 +328,24 @@
                     const taskId = button.dataset.taskId;
                     const modal = document.querySelector('#popup-modal');
                     const form = modal.querySelector('form');
-                    form.action = form.action.replace('task_id', taskId);
-                    form.querySelector('input[name="task_id"]').value = taskId;
+                    form.action = form.action.replace('subtask_id', taskId);
+                    form.querySelector('input[name="subtask_id"]').value = taskId;
                 });
             });
+
         </script>
     @endif
+
+    @section('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.task_id_selelect').select2({
+                    theme: "classic"
+                });
+                
+            });
+        </script>
+    @endsection
 
 </x-app-layout>

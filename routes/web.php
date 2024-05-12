@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubTaskController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,15 @@ Route::middleware('auth')->group(function () {
         Route::put('/{task}', [TaskController::class, 'update'])->name('tasks.update');
         Route::get('/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
         Route::get('/search', [TaskController::class, 'search'])->name('tasks.search');
+    });
+
+    Route::prefix('subtasks')->group(function () {
+        Route::get('/', [SubTaskController::class, 'index'])->name('subtasks.index');
+        Route::post('/store', [SubTaskController::class, 'store'])->name('subtasks.store');
+        Route::delete('/{subtask}', [SubTaskController::class, 'destroy'])->name('subtasks.destroy');
+        Route::put('/{subtask}', [SubTaskController::class, 'update'])->name('subtasks.update');
+        Route::get('/{subtask}/edit', [SubTaskController::class, 'edit'])->name('subtasks.edit');
+        Route::get('/search', [SubTaskController::class, 'search'])->name('subtasks.search');
     });
 });
 
