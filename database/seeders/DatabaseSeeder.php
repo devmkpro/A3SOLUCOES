@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
             'user_id' => User::first()->id,
             'expires_at' => now()->addMonths(6),
             'recurrence_type' => 'weekly',
-            'recurrence_end_date' => now()->addMonths(6),
         ]);
     }
 }

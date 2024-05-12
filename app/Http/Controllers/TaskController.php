@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -29,9 +28,8 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed',
-            'expires_at' => 'nullable|date|after:today|after:recurrence_end_date',            
+            'expires_at' => 'nullable|date|after:today',            
             'recurrence_type' => 'nullable|string|in:daily,weekly,monthly,yearly',
-            'recurrence_end_date' => 'nullable|date|after:today',
         ]);
 
         
@@ -80,9 +78,8 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed,canceled',
-            'expires_at' => 'nullable|date|after:today|after:recurrence_end_date',
+            'expires_at' => 'nullable|date|after:today',
             'recurrence_type' => 'nullable|string|in:daily,weekly,monthly,yearly',
-            'recurrence_end_date' => 'nullable|date|after:today',
         ]);
 
         $task->update($request->all());
