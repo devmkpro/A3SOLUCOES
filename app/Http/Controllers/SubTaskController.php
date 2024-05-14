@@ -101,15 +101,10 @@ class SubTaskController extends Controller
         $request->validate([
             'search' => 'required|string|max:255',
         ]);
-    
-        $subtasks = SubTask::where('title', 'like', "%{$request->search}%")
-            ->orWhere('description', 'like', "%{$request->search}%")
-            ->whereHas('task', function ($query) {
-                $query->where('user_id', auth()->id());
-            });
 
-        $subtasks = $subtasks->get()->filter(function ($subtask) {
-            return $subtask->task->user_id === auth()->id();
+        $subtasks = SubTask::where('title', 'like', "%{$request->search}%")
+            ->orWhere('description', 'like', "%{$request->search}%")->get()->filter(function ($subtask) {
+                return $subtask->task->user_id === auth()->id();
         });
 
 
@@ -119,5 +114,4 @@ class SubTaskController extends Controller
             'tasks' => auth()->user()->tasks()->get(),
         ]);
     }
-    
 }

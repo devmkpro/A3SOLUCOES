@@ -111,7 +111,7 @@
                                             {{ __('No date') }}
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 text-center">
                                         @if ($task->status == 'completed')
                                             <span
                                                 class="text-green-500 bg-green-100 font-semibold px-2.5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-200">
@@ -178,7 +178,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td class="px-6 py-4 text-center" colspan="6">
+                                <td class="px-6 py-4 text-center" colspan="7">
                                     {{ __('No tasks found') }}
                                 </td>
                             </tr>
