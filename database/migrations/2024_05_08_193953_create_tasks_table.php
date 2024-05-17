@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
+            $table->string('title', 100);
+            $table->longText('description')->nullable();
             $table->enum('status', ['pending', 'completed', 'expired', 'canceled'])->default('pending');
             $table->dateTime('expires_at')->nullable();
             $table->enum('recurrence_type', ['daily', 'weekly', 'monthly', 'yearly'])->nullable();
