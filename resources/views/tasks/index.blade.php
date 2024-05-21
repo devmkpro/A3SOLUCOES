@@ -112,12 +112,12 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        @if ($task->status == 'completed')
+                                    @if ($task->status == 'completed')
                                             <span
                                                 class="text-green-500 bg-green-100 font-semibold px-2.5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-200">
                                                 {{ __('Completed') }}
                                             </span>
-                                        @elseif (\Carbon\Carbon::parse($task->expires_at)->isPast())
+                                        @elseif ((\Carbon\Carbon::parse($task->expires_at)->isPast() && $task->expires_at != null) || $task->status == 'expired')
                                             <span
                                                 class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Expired') }}
@@ -127,7 +127,7 @@
                                                 class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Canceled') }}
                                             </span>
-                                        @else
+                                        @elseif ($task->status == 'pending')
                                             <span
                                                 class="text-yellow-500 bg-yellow-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Pending') }}
