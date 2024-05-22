@@ -49,7 +49,7 @@ class User extends Authenticatable
     /**
      * Get the subtasks for the user.
      */
-    public function subtasks(): HasManyThrough
+    public function subTasks(): HasManyThrough
     {
         return $this->hasManyThrough(SubTask::class, Task::class, 'user_id', 'task_id'); 
     }

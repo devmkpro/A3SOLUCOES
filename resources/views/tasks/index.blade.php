@@ -103,7 +103,7 @@
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
                                     <td class="px-6 py-4">{{ $task->title }}</td>
                                     <td class="px-6 py-4">{{ $task->description }}</td>
-                                    <td class="px-6 py-4">{{ $task->subtasks->count() }}</td>
+                                    <td class="px-6 py-4">{{ $task->subTasks->count() }}</td>
                                     <td class="px-6 py-4">
                                         @if ($task->expires_at)
                                             {{ \Carbon\Carbon::parse($task->expires_at)->format('d/m/Y') }}

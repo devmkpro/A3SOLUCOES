@@ -15,7 +15,7 @@ class SubTaskController extends Controller
     public function index(): View
     {
         return view('subtasks.index', [
-            'subtasks' => auth()->user()->subtasks()->paginate(10),
+            'subtasks' => auth()->user()->subTasks()->paginate(10),
             'tasks' => auth()->user()->tasks()->get(),
         ]);
     }
@@ -38,7 +38,7 @@ class SubTaskController extends Controller
             return Redirect::route('subtasks.index')->with('error', __('subtasks.task_not_found'));
         }
 
-        $request->user()->subtasks()->create($request->all());
+        $request->user()->subTasks()->create($request->all());
 
         return Redirect::route('subtasks.index')->with('success', __('subtasks.created'));
     }
