@@ -30,7 +30,7 @@ class SubTaskController extends Controller
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed',
             'task_id' => 'required|exists:tasks,id',
-            'expires_at' => 'nullable|date|after:today',
+            'expires_at' => 'nullable|date|after_or_equal:today',
         ]);
 
         $task = auth()->user()->tasks()->find($request->task_id);
@@ -85,7 +85,7 @@ class SubTaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed,canceled',
-            'expires_at' => 'nullable|date|after:today',
+            'expires_at' => 'nullable|after_or_equal:today',
         ]);
 
         $subtask->update($request->all());

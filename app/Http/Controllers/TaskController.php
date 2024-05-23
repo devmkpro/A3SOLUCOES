@@ -28,7 +28,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed',
-            'expires_at' => 'nullable|date|after:today',            
+            'expires_at' => 'nullable|date|after_or_equal:today',            
             'recurrence_type' => 'nullable|string|in:daily,weekly,monthly,yearly',
         ]);
 
@@ -77,7 +77,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed,canceled',
-            'expires_at' => 'nullable|date|after:today',
+            'expires_at' => 'nullable|date|after_or_equal:today',
             'recurrence_type' => 'nullable|string|in:daily,weekly,monthly,yearly',
         ]);
 
