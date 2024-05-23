@@ -40,12 +40,13 @@ class RegisteredUserController extends Controller
             'cpf' => ['required', 'string', 'unique:'.User::class, new ValidateCPF()],
         ]);
 
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'birth_date' => Carbon::parse($request->birth_date),
-            'cpf' => $request->cpf,
+            'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
         ]);
 
         event(new Registered($user));

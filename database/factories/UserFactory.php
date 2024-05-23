@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
-            'cpf' => '306.438.780-41',
+            'cpf' => '30643878041',
             'birth_date' => fake()->date('Y-m-d', '2000-01-01'),
         ];
     }

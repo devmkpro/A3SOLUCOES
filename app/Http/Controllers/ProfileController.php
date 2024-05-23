@@ -31,7 +31,12 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $request->user()->fill([
+            'name' => $request->name,
+            'email' => $request->email,
+            'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
+            'birth_date' => Carbon::parse($request->birth_date),
+        ]);
 
         $request->user()->save();
 
