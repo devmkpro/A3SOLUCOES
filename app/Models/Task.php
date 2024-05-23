@@ -59,7 +59,7 @@ class Task extends Model
     }
 
 
-    public function subtasks(): HasMany
+    public function subTasks(): HasMany
     {
         return $this->hasMany(SubTask::class);
     }

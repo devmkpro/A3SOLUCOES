@@ -86,7 +86,7 @@
                                 {{ __('Status') }}
                             </th>
 
-                            <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-white text-center">
                                 {{ __('Is Recurrent') }}
                             </th>
 
@@ -103,7 +103,7 @@
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
                                     <td class="px-6 py-4">{{ $task->title }}</td>
                                     <td class="px-6 py-4">{{ $task->description }}</td>
-                                    <td class="px-6 py-4">{{ $task->subtasks->count() }}</td>
+                                    <td class="px-6 py-4">{{ $task->subTasks->count() }}</td>
                                     <td class="px-6 py-4">
                                         @if ($task->expires_at)
                                             {{ \Carbon\Carbon::parse($task->expires_at)->format('d/m/Y') }}
@@ -112,12 +112,12 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        @if ($task->status == 'completed')
+                                    @if ($task->status == 'completed')
                                             <span
                                                 class="text-green-500 bg-green-100 font-semibold px-2.5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-200">
                                                 {{ __('Completed') }}
                                             </span>
-                                        @elseif (\Carbon\Carbon::parse($task->expires_at)->isPast())
+                                        @elseif ((\Carbon\Carbon::parse($task->expires_at)->isPast() && $task->expires_at != null) || $task->status == 'expired')
                                             <span
                                                 class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Expired') }}
@@ -127,7 +127,7 @@
                                                 class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Canceled') }}
                                             </span>
-                                        @else
+                                        @elseif ($task->status == 'pending')
                                             <span
                                                 class="text-yellow-500 bg-yellow-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Pending') }}

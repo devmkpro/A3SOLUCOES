@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\SubTask;
 use App\Models\Task;
+
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,13 +24,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
        
-        Task::factory(5)->create();
         Task::create([
-            'title' => 'Test Task',
-            'description' => 'This is a test task',
+            'title' => 'Ir ao Midway',
+            'description' => 'Ir ao Midway Mall para comprar um presente de aniversário.',
             'user_id' => User::first()->id,
             'expires_at' => now()->addMonths(6),
-            'recurrence_type' => 'weekly',
+        ]);
+
+        SubTask::create([
+            'title' => 'Lanchar no refeitório',
+            'description' => 'Lanchar no refeitório do shopping.',
+            'task_id' => Task::first()->id,
+            'expires_at' => now()->addMonths(6),
         ]);
     }
 }
