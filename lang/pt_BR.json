@@ -307,5 +307,7 @@
     "subtasks.deleted" : "Subtarefa deletada com sucesso",
     "Are you sure you want to delete this subtask?" : "Você tem certeza que deseja deletar esta subtarefa?",
     "Task" : "Tarefa",
-    "Qtd Subtasks" : "Subtarefas"
+    "Qtd Subtasks" : "Subtarefas",
+    "You have :count tasks pending" : "Você tem :count tarefas pendentes",
+    "View Tasks" : "Ver Tarefas"
 }
