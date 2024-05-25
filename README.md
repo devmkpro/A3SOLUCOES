@@ -2,16 +2,6 @@
 
 Bem-vindo ao repositório do **Sistema de Gestão de Tarefas**! Este projeto visa ajudar os usuários a organizar e acompanhar suas tarefas diárias de forma eficiente.
 
-## 📝 Sumário
-
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Funcionalidades](#funcionalidades)
-- [Instalação](#instalação)
-- [Como Usar](#como-usar)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
-- [Contato](#contato)
-
 ## 📖 Sobre o Projeto
 
 O **Sistema de Gestão de Tarefas** é uma aplicação web que permite aos usuários criar, editar, deletar e visualizar tarefas. O projeto foi criado para realização de uma avaliação.
