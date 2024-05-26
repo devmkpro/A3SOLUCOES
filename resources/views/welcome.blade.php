@@ -914,9 +914,10 @@
 
             <div class="mt-6">
 
-                <a class=" block mt-6 px-6 py-2 bg-[#FF2D20] text-white rounded-md hover:bg-[#FF2D20] dark:hover:bg-[#FF2D20] hover:text-white dark:hover:text-white/80 transition duration-300"
+                <a class="text-black dark:text-white underline"
                     href="{{ route('login') }}">
-                    Comece agora!</a>
+                    Comece agora!
+                </a>
             </div>
 
         </div>
