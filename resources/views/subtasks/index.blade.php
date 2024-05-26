@@ -117,7 +117,7 @@
                                                 class="text-green-500 bg-green-100 font-semibold px-2.5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-200">
                                                 {{ __('Completed') }}
                                             </span>
-                                        @elseif ((\Carbon\Carbon::parse($subtask->expires_at)->isPast() && $subtask->expires_at != null) || $subtask->status == 'expired')
+                                        @elseif ( $subtask->status == 'expired' || $subtask->expires_at < now())
                                             <span
                                                 class="text-red-500 bg-red-100 font-semibold px-2.5 py-1.5 rounded-full">
                                                 {{ __('Expired') }}
