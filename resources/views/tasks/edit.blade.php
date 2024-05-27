@@ -59,12 +59,34 @@
                         <x-input-label for="status" :value="__('Status')" />
                         <select id="status" name="status"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-primary-600 dark:focus:border-primary-600">
-                            <option selected value="pending">{{ __('Pending') }}</option>
-                            <option value="completed">{{ __('Completed') }}</option>
-                            <option value="canceled">{{ __('Canceled') }}</option>
+                            <option selected value="pending" @if($task->status == 'pending') selected @endif>{{ __('Pending') }}</option>
+                            <option value="completed" @if($task->status == 'completed') selected @endif >{{ __('Completed') }}</option>
+                            <option value="canceled" @if($task->status == 'canceled') selected @endif>{{ __('Canceled') }}</option>
                         </select>
                         <x-input-error class="mt-2" :messages="$errors->get('status')" />
                     </div>
+
+                    @if ($task->subTasks->count() > 0)
+
+                        <div class="mb-4">
+                            <div class="flex items-center">
+                                <input id="subtasks" name="change_subtasks" type="checkbox"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset
+                                    dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="subtasks" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                        {{ __('Change Subtasks Status') }}
+                                    </label>
+
+                                <small 
+                                    class= "ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                   {{ __('This changes the statuses of all subtasks related to this task') }}
+                                </small>
+                            </div>
+
+
+                        </div>
+
+                    @endif
 
 
                     <div class="flex items-center space-x-4">

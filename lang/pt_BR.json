@@ -309,5 +309,7 @@
     "Task" : "Tarefa",
     "Qtd Subtasks" : "Subtarefas",
     "You have :count tasks pending" : "Você tem :count tarefas pendentes",
-    "View Tasks" : "Ver Tarefas"
+    "View Tasks" : "Ver Tarefas",
+    "Change Subtasks Status" :  "Alterar o mesmo status para as subtarefas",
+    "This changes the statuses of all subtasks related to this task" : "(Isso altera os status de todas as subtarefas relacionadas a esta tarefa)"
 }

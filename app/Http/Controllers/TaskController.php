@@ -79,9 +79,15 @@ class TaskController extends Controller
             'status' => 'required|string|in:pending,completed,canceled',
             'expires_at' => 'nullable|date|after_or_equal:today',
             'recurrence_type' => 'nullable|string|in:daily,weekly,monthly,yearly',
+            'change_subtasks' => 'nullable',
         ]);
 
+
         $task->update($request->all());
+
+        if ($request->change_subtasks){
+            $task->subtasks()->update(['status' => $request->status]);
+        }
 
         return Redirect::route('tasks.index')->with('success', __('tasks.updated'));
     }
