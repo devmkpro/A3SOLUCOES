@@ -31,14 +31,26 @@ Para rodar o projeto localmente, siga os passos abaixo:
     ```bash
     composer install
     ```
-4. Inicie o servidor:
+4. Copie o arquivo .env:
+    ```bash
+    cp .env.example .env
+    ```
+5. Adicione suas configurações de banco de dados
+    ```bash
+    php artisan migrate --seed
+    ```
+6. Crie uma key:
+    ```bash
+    php artisan key:generate
+    ```
+7. Inicie o servidor:
     ```bash
     php artisan serve
     ```
 
 ## 💻 Como Usar
 
-1. Acesse `http://localhost:3000` em seu navegador.
+1. Acesse `http://localhost:8000` em seu navegador.
 2. Faça login ou crie uma nova conta.
 3. Utilize a interface para adicionar, editar ou remover tarefas.
 4. Visualize suas tarefas no dashboard e organize-as conforme necessário.
