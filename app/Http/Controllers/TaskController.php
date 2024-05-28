@@ -6,6 +6,7 @@ use App\Models\Task;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
@@ -28,7 +29,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed',
-            'expires_at' => 'nullable|date|after_or_equal:today',            
+            'expires_at' => 'nullable|exclude_if:status,completed|date|after_or_equal:today',            
             'recurrence_type' => 'nullable|string|in:daily,weekly,monthly,yearly',
         ]);
 
@@ -77,7 +78,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'status' => 'required|string|in:pending,completed,canceled',
-            'expires_at' => 'nullable|date|after_or_equal:today',
+            'expires_at' => 'nullable|exclude_if:status,canceled|exclude_if:status,completed|after_or_equal:today',
             'recurrence_type' => 'nullable|string|in:daily,weekly,monthly,yearly',
             'change_subtasks' => 'nullable',
         ]);
