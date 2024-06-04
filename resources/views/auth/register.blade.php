@@ -40,13 +40,13 @@
         </div>
 
         <small class="text-gray-500">
-            {{ __('Generate a') }} 
-            
+            {{ __('Generate a') }}
+
             <button href="https://www.4devs.com.br/gerador_de_cpf" class="text-blue-500"
                 type="button" onclick="generateClientId()" style="cursor: pointer; color: #3b82f6;">
                 {{ __('valid CPF') }}
             </button>
-            
+
         </small>
 
         <!-- Password -->
@@ -94,26 +94,31 @@
                 });
             });
 
-            function generateRandomClientId() {
-                const part1 = generateRandomNumber();
-                const part2 = generateRandomNumber();
-                const part3 = generateRandomNumber();
-                const verifier1 = calculateChecksum(part1, part2, part3);
-                const verifier2 = calculateChecksum(part1, part2, part3, verifier1);
+            
+            function generateClientId() { 
+                const clientIdInput = document.getElementById('cpf');
+                clientIdInput.value = generateRandomClientId();
+            }
 
-                return `${part1}.${part2}.${part3}-${verifier1}${verifier2}`;
+            function generateRandomNumber() {
+                return Math.floor(Math.random() * 999).toString().padStart(3, '0');
+                // exemplo de saida:
+                //Math.random() * 999 ≈ 56.982
+                //Math.floor(56.982) = 56
+                //56.toString() = "56"
+                //"56".padStart(3, '0') = "056"
             }
 
             function calculateChecksum(part1, part2, part3, firstChecksumDigit) {
-                const numbers = `${part1}${part2}${part3}`.split("");
+                const numbers = `${part1}${part2}${part3}`.split(""); 
 
                 if (firstChecksumDigit !== undefined) {
                     numbers[9] = firstChecksumDigit;
                 }
 
                 let sum = 0;
-                let index = 0;
-                let start = firstChecksumDigit !== undefined ? 11 : 10;
+                let index = 0; // controla a posição do array
+                let start = firstChecksumDigit !== undefined ? 11 : 10; // para que o ultimo sempre seja multiplicado por 2
 
                 for (let num = start; num >= 2; num--) {
                     sum += parseInt(numbers[index]) * num;
@@ -124,14 +129,17 @@
                 return remainder < 2 ? 0 : 11 - remainder;
             }
 
-            function generateRandomNumber() {
-                return Math.floor(Math.random() * 999).toString().padStart(3, '0');
+            function generateRandomClientId() {
+                const part1 = generateRandomNumber();
+                const part2 = generateRandomNumber();
+                const part3 = generateRandomNumber();
+                const verifier1 = calculateChecksum(part1, part2, part3);
+                const verifier2 = calculateChecksum(part1, part2, part3, verifier1);
+
+                return `${part1}.${part2}.${part3}-${verifier1}${verifier2}`;
             }
 
-            function generateClientId() {
-                const clientIdInput = document.getElementById('cpf');
-                clientIdInput.value = generateRandomClientId();
-            }
+
         </script>
     @endsection
 </x-guest-layout>
