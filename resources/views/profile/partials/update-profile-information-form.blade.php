@@ -42,7 +42,7 @@
             <x-input-error class="mt-2" :messages="$errors->get('birth_date')" />
 
             <small class="block font-medium text-sm text-gray-700 dark:text-gray-300 mt-1">
-                {{ __('Ager') }} : {{ \Carbon\Carbon::parse($user->birth_date)->age }}
+                {{ __('Ager') }} : {{ $user->age }}
             </small>
         </div>
 
