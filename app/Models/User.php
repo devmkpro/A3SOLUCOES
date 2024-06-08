@@ -39,6 +39,16 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     public function getAgeAttribute()
     {
         return Carbon::parse($this->birth_date)->age;
@@ -57,6 +67,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function subTasks(): HasManyThrough
     {
-        return $this->hasManyThrough(SubTask::class, Task::class, 'user_id', 'task_id'); 
+        return $this->hasManyThrough(SubTask::class, Task::class, 'user_id', 'task_id');
     }
 }

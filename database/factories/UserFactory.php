@@ -29,6 +29,8 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'cpf' => '30643878041',
             'birth_date' => fake()->date('Y-m-d', '2000-01-01'),
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
         ];
     }
 
