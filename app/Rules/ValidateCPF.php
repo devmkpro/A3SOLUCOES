@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -12,6 +13,10 @@ class ValidateCPF implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $cpf = preg_replace('/\D/', '', $value);
+
+        if (User::where('cpf', $cpf)->exists()) {
+            $fail('CPF já cadastrado.');
+        }
 
         if (!strlen($cpf) == 11) {
             $fail('CPF deve conter 11 caracteres.');
