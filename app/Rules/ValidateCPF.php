@@ -14,7 +14,9 @@ class ValidateCPF implements ValidationRule
     {
         $cpf = preg_replace('/\D/', '', $value);
 
-        if (User::where('cpf', $cpf)->exists()) {
+        if (User::where('cpf', $cpf)->exists() && !auth()->check()) {
+            $fail('CPF já cadastrado.');
+        } elseif (auth()->check() && User::where('cpf', $cpf)->where('id', '!=', auth()->id())->exists()) {
             $fail('CPF já cadastrado.');
         }
 
