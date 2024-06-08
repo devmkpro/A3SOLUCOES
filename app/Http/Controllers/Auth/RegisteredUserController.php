@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
             'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         Auth::login($user);
 
