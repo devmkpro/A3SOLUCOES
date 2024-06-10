@@ -11,6 +11,6 @@ class ValidateBirthDate implements ValidationRule
    
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        Carbon::parse($value)->age >= 120 ? $fail('Você não pode ter mais de 120 anos.') : null;
+        Carbon::parse($value)->age >= 120 ? $fail('A idade não pode ser maior que 120') : null;
     }
 }
