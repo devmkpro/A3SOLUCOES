@@ -44,7 +44,7 @@
                         <x-input-label for="birth_date" :value="__('Birth Date')" />
                         <x-text-input id="birth_date" name="birth_date" type="date" class="mt-1 block w-full"
                             :value="old('birth_date')" required autofocus autocomplete="birth_date"
-                            placeholder="Digite a data de nascimento" value="{{ $user->birth_date }}" />
+                            placeholder="Digite a data de nascimento" value="{{ \Carbon\Carbon::parse($user->birth_date)->format('Y-m-d') }}" />
                         <x-input-error class="mt-2" :messages="$errors->get('birth_date')" />
                     </div>
 
