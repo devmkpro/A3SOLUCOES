@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index(): View
     {
         return view('users.index', [
-            'users' => User::paginate(10),
+            'users' => User::where('is_admin', false)->paginate(10),
         ]);
     }
 
@@ -76,6 +76,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if ($user->is_admin) {
+            return redirect()->route('users.index')->with('error', __('user.cannot_delete_admin'));
+        }
+        
         $user->delete();
 
         return redirect()->route('users.index')->with('success', __('user.deleted'));
