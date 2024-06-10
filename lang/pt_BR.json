@@ -251,6 +251,7 @@
     "profile.updated" : "Você atualizou seu perfil",
     "profile.success" : "Perfil atualizado com sucesso",
     "password.updated" : "Você atualizou sua senha",
+    "user.updated" : "Usuário atualizado com sucesso",
     "password.success" : "Senha atualizada com sucesso",
     "Tasks" : "Tarefas",
     "SubTasks" : "Subtarefas",
@@ -260,6 +261,7 @@
     "Status" : "Status",
     "No tasks found" : "Nenhuma tarefa encontrada",
     "No subtasks found" : "Nenhuma subtarefa encontrada",
+    "No users found" : "Nenhum usuário encontrado",
     "Create Task" : "Nova Tarefa",
     "Create SubTask" : "Nova Subtarefa",
     "Completed" : "Concluída",
@@ -268,6 +270,7 @@
     "tasks.not_allowed" : "Você não tem permissão para realizar esta ação",
     "subtasks.not_allowed" : "Você não tem permissão para realizar esta ação",
     "tasks.deleted" : "Tarefa deletada com sucesso",
+    "user.deleted" : "Usuário deletado com sucesso",
     "Yes, delete" : "Sim, deletar",
     "No, cancel" : "Não, cancelar",
     "Are you sure you want to delete this task?" : "Você tem certeza que deseja deletar esta tarefa?",
@@ -276,6 +279,7 @@
     "Update" : "Atualizar",
     "Search" : "Buscar",
     "Search for tasks" : "Buscar por tarefas",
+    "Search for users" : "Buscar por usuários",
     "Clear search" : "Limpar busca",
     "Ager" : "Idade",
     "Are you sure you want to delete your account?" : "Você tem certeza que deseja deletar sua conta?",
@@ -313,5 +317,7 @@
     "You have :count tasks pending" : "Você tem :count tarefas pendentes",
     "View Tasks" : "Ver Tarefas",
     "Change Subtasks Status" :  "Alterar o mesmo status para as subtarefas",
-    "This changes the statuses of all subtasks related to this task" : "(Isso altera os status de todas as subtarefas relacionadas a esta tarefa)"
+    "This changes the statuses of all subtasks related to this task" : "(Isso altera os status de todas as subtarefas relacionadas a esta tarefa)",
+    "Update User" : "Atualizar Usuário",
+    "Are you sure you want to delete this user?" : "Você tem certeza que deseja deletar este usuário?"
 }

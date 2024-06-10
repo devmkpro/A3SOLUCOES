@@ -20,7 +20,7 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore(auth()->user()->id)],
-            'cpf' => ['required', 'string', 'max:14', Rule::unique(User::class)->ignore(auth()->user()->id), new ValidateCPF()],
+            'cpf' => ['required', 'string', 'max:14', Rule::unique(User::class)->ignore(auth()->user()->id), new ValidateCPF(auth()->user())],
             'birth_date' => ['required', 'date', 'before:today', new ValidateBirthDate()],
         ];
     }

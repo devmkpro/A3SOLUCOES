@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Rules\ValidateBirthDate;
 use App\Rules\ValidateCPF;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +36,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'birth_date' => ['required', 'date', 'before:today', new ValidateBirthDate()], 
-            'cpf' => ['required', 'string', 'unique:'.User::class, new ValidateCPF()],
+            'cpf' => ['required', 'string', 'unique:'.User::class, new ValidateCPF(auth()->user())],
         ]);
 
 

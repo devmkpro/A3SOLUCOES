@@ -3,17 +3,19 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubTaskController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -35,6 +37,15 @@ Route::middleware('auth')->group(function () {
         Route::put('/{subtask}', [SubTaskController::class, 'update'])->name('subtasks.update');
         Route::get('/{subtask}/edit', [SubTaskController::class, 'edit'])->name('subtasks.edit');
         Route::get('/search', [SubTaskController::class, 'search'])->name('subtasks.search');
+    });
+
+    Route::middleware('is_admin')->prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('users.index');
+        Route::post('/store', [UserController::class, 'store'])->name('users.store');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::get('/search', [UserController::class, 'search'])->name('users.search');
     });
 });
 
