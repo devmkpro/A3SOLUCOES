@@ -27,6 +27,10 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        if ($request->email !== $request->user()->email) {
+            $request->user()->email_verified_at = null;
+        }
+
         $request->user()->fill([
             'name' => $request->name,
             'email' => $request->email,
