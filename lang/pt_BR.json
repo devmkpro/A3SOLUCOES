@@ -323,5 +323,6 @@
     "This changes the statuses of all subtasks related to this task" : "(Isso altera os status de todas as subtarefas relacionadas a esta tarefa)",
     "Update User" : "Atualizar Usuário",
     "Are you sure you want to delete this user?" : "Você tem certeza que deseja deletar este usuário?",
-    "user.cannot_delete_admin" : "Um administrador não pode ser deletado"
+    "user.cannot_delete_admin" : "Um administrador não pode ser deletado",
+    "Your email has been verified." : "Seu e-mail foi verificado."
 }

@@ -8,6 +8,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+            <div class="items-center mb-2">
+                @include('components.erros_val')
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @if (auth()->user()->is_admin)
                     <div class="p-6 bg-white dark:bg-gray-800 dark:text-gray-200 rounded-lg shadow">
